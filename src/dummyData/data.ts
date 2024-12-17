@@ -5,7 +5,7 @@ export const DUMMY_USERS = [
       role: 'Employee',
       profile: {
         id: 'profile1',
-        email: 'john.doe@domain.com',
+        email: 'john@domain.com',
         password: 'password123',
         phone: '1234567890',
         jobHistory: [
@@ -21,8 +21,8 @@ export const DUMMY_USERS = [
       role: 'Manager',
       profile: {
         id: 'profile2',
-        email: 'jane.smith@domain.com',
-        password: 'admin456',
+        email: 'jane@domain.com',
+        password: '1234',
         phone: '0987654321',
         jobHistory: [
           { id: 'job2', jobTitle: 'Project Manager', startDate: '2020-01-01', description: 'Managed teams' },
