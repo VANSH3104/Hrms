@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Sidebar } from "../Dashboard/Components/sidebar";
 import { Button } from "../components/ui/button";
 import { FaGripLines } from "react-icons/fa";
-
+import "../App.css"
 interface MainLayoutProps {
   children: React.ReactNode;
 }

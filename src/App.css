@@ -1,5 +1,6 @@
 /* Define light mode default */
 :root {
+    --font-color: #333;
     --background-color: #ffffff;
     --text-color: #000000;
     --link-color: #007bff;
@@ -9,6 +10,7 @@
   
   /* Dark mode styles */
   [data-theme="dark"] {
+    --font-color: #eee;
     --background-color: #121212;
     --text-color: #ffffff;
     --link-color: #bb86fc;
@@ -20,7 +22,7 @@
   body {
     background-color: var(--background-color);
     color: var(--text-color);
-    transition: background-color 0.3s ease, color 0.3s ease;
+    
   }
   
   a {
