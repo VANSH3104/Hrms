@@ -2,7 +2,8 @@ export const DUMMY_USERS = [
   {
     id: '1',
     name: 'John Doe',
-    role: 'Hr',
+    role: 'HR',
+    managerId: 'Null',
     profile: {
       id: 'profile1',
       email: 'john@domain.com',
@@ -14,11 +15,68 @@ export const DUMMY_USERS = [
       skills: ['JavaScript', 'React', 'Redux'],
       performanceMetrics: { id: 'metrics1', rating: 4.5, feedback: 'Excellent performance' },
     },
+    leaveRequests: [
+      {
+        id: 'leave1',
+        employeeId: '1',
+        employeeleave: {
+          employeeId: '1',
+          totalLeaves: 43,
+          nationalHolidays: 5,
+          takenLeaves: 5,
+          usedNationalHolidays: 1,
+          remainingLeaves: 38,
+        },
+        leaveType: 'Vacation',
+        startDate: '2024-12-01',
+        endDate: '2024-12-10',
+        status: 'Approved',
+      },
+    ],
+    attendance: [
+      { id: 'attendance1', employeeId: '1', date: '2024-12-16', status: 'Present' },
+      { id: 'attendance2', employeeId: '1', date: '2024-12-17', status: 'Late' },
+    ],
+    tasks: [
+      {
+        id: 'task1',
+        employeeId: '1',
+        description: 'Complete frontend development for new feature',
+        deadline: '2024-12-18',
+        priority: 'High',
+        progress: 70,
+      },
+      {
+        id: 'task1',
+        employeeId: '1',
+        description: 'Complete frontend development for new feature',
+        deadline: '2024-12-18',
+        priority: 'High',
+        progress: 70,
+      },
+      {
+        id: 'task1',
+        employeeId: '1',
+        description: 'Complete frontend development for new feature',
+        deadline: '2024-12-18',
+        priority: 'High',
+        progress: 70,
+      },
+      {
+        id: 'task1',
+        employeeId: '1',
+        description: 'Complete frontend development for new feature',
+        deadline: '2024-12-18',
+        priority: 'High',
+        progress: 70,
+      },
+    ],
   },
   {
     id: '2',
     name: 'Jane Smith',
     role: 'Manager',
+    managerId: '1',
     profile: {
       id: 'profile2',
       email: 'jane@domain.com',
@@ -30,11 +88,44 @@ export const DUMMY_USERS = [
       skills: ['Leadership', 'Project Management'],
       performanceMetrics: { id: 'metrics2', rating: 4.8, feedback: 'Exceptional leader' },
     },
+    leaveRequests: [
+      {
+        id: 'leave2',
+        employeeId: '2',
+        employeeleave: {
+          employeeId: '2',
+          totalLeaves: 43,
+          nationalHolidays: 5,
+          takenLeaves: 2,
+          usedNationalHolidays: 0,
+          remainingLeaves: 41,
+        },
+        leaveType: 'Sick',
+        startDate: '2024-12-01',
+        endDate: '2024-12-02',
+        status: 'Approved',
+      },
+    ],
+    attendance: [
+      { id: 'attendance3', employeeId: '2', date: '2024-12-16', status: 'Present' },
+      { id: 'attendance4', employeeId: '2', date: '2024-12-17', status: 'Absent' },
+    ],
+    tasks: [
+      {
+        id: 'task2',
+        employeeId: '2',
+        description: 'Conduct team meeting to discuss project milestones',
+        deadline: '2024-12-18',
+        priority: 'Medium',
+        progress: 90,
+      },
+    ],
   },
   {
     id: '3',
     name: 'Emily Taylor',
     role: 'Employee',
+    managerId: '2',
     profile: {
       id: 'profile3',
       email: 'emily@domain.com',
@@ -46,5 +137,37 @@ export const DUMMY_USERS = [
       skills: ['Recruitment', 'Employee Relations', 'Conflict Management'],
       performanceMetrics: { id: 'metrics3', rating: 4.9, feedback: 'Great team player and recruiter' },
     },
+    leaveRequests: [
+      {
+        id: 'leave3',
+        employeeId: '3',
+        employeeleave: {
+          employeeId: '3',
+          totalLeaves: 43,
+          nationalHolidays: 5,
+          takenLeaves: 0,
+          usedNationalHolidays: 0,
+          remainingLeaves: 43,
+        },
+        leaveType: 'Vacation',
+        startDate: '2024-12-05',
+        endDate: '2024-12-15',
+        status: 'Pending',
+      },
+    ],
+    attendance: [
+      { id: 'attendance5', employeeId: '3', date: '2024-12-16', status: 'Present' },
+      { id: 'attendance6', employeeId: '3', date: '2024-12-17', status: 'Late' },
+    ],
+    tasks: [
+      {
+        id: 'task3',
+        employeeId: '3',
+        description: 'Update employee records and handle onboarding tasks',
+        deadline: '2024-12-20',
+        priority: 'High',
+        progress: 50,
+      },
+    ],
   },
 ];

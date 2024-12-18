@@ -3,13 +3,20 @@ export interface HRMSState {
     profile?: UserProfile,
     jobHistory?: JobHistory,
     performance?: PerformanceMetrics
+    leaveRequests?: LeaveRequest[];
+    attendance?: Attendance[];
+    tasks?: Task[];
 }
 export interface User {
     id: string;
     name: string;
     role: 'HR' | 'Manager' | 'Employee';
-    managerId?: string;
+    managerId: string;
     profile: UserProfile;
+    leaveRequests: LeaveRequest[];
+    attendance: Attendance[];
+    tasks: Task[];
+
   }
   
 export interface UserProfile {
@@ -35,3 +42,35 @@ export interface PerformanceMetrics {
     rating: number;
     feedback: string;
   }
+export interface LeaveRequest {
+  id: string;
+  employeeId: string;
+  employeeleave: EmployeeLeave;
+  leaveType: 'Sick' | 'Vacation' | 'Other';
+  startDate: string;
+  endDate: string;
+  status: 'Pending' | 'Approved' | 'Rejected';
+}
+export interface Attendance {
+  id: string;
+  employeeId: string;
+  date: string;
+  status: 'Present' | 'Absent' | 'Late';
+}
+
+export interface Task {
+  id: string;
+  employeeId: string;
+  description: string;
+  deadline: string; 
+  priority: 'Low' | 'Medium' | 'High';
+  progress: number;
+}
+export interface EmployeeLeave {
+  employeeId: string;
+  totalLeaves: number;
+  nationalHolidays: number;
+  takenLeaves: number;
+  usedNationalHolidays: number;
+  remainingLeaves: number;
+}

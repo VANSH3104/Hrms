@@ -33,7 +33,7 @@ export const Sidebar: React.FC = () => {
   const isActive = (path: string) => location.pathname === path;
 
   return (
-    <div className={`w-56 min-h-screen p-5 rounded-lg shadow-xl overflow-hidden ${isDarkMode ? "bg-gray-800" : "bg-slate-100"}`}>
+    <div className={`w-56 min-h-screen p-5 rounded-lg shadow-xl overflow-hidden ${isDarkMode ? "bg-gray-800" : ""}`}>
       <div className="text-center">
         <h2 className={`text-3xl font-bold ${isDarkMode ? "text-indigo-300" : "text-indigo-500"}`}>HRMS</h2>
       </div>
