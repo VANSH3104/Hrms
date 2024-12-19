@@ -39,7 +39,7 @@ export const Login: React.FC = () => {
   };
 
   return (
-    <div className="flex justify-center items-center h-screen bg-gradient-to-r from-blue-500 via-pink-300 to-pink-500">
+    <div className="flex justify-center items-center h-screen bg-gradient-to-r from-blue-500 via-pink-300 to-pink-500 backdrop-blur-sm">
   <Card className="rounded-lg w-[360px] shadow-lg bg-white">
     <CardHeader className="font-sans text-center">
       <CardTitle className="text-3xl font-bold text-gray-800">Welcome Back</CardTitle>
@@ -79,7 +79,7 @@ export const Login: React.FC = () => {
           <Button
             size="lg"
             type="submit"
-            className="w-full bg-blue-600 text-white hover:bg-blue-700 transition-all rounded-lg"
+            className="w-full bg-indigo-600 text-white hover:bg-blue-700 transition-all rounded-lg"
           >
             Login
           </Button>

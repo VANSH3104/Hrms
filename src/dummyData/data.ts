@@ -59,7 +59,7 @@ export const DUMMY_USERS = [
         employeeId: '1',
         description: 'Complete frontend development for new feature',
         deadline: '2024-12-18',
-        priority: 'High',
+        priority: 'Medium',
         progress: 70,
       },
       {
@@ -67,7 +67,7 @@ export const DUMMY_USERS = [
         employeeId: '1',
         description: 'Complete frontend development for new feature',
         deadline: '2024-12-18',
-        priority: 'High',
+        priority: 'Low',
         progress: 70,
       },
     ],
@@ -76,7 +76,7 @@ export const DUMMY_USERS = [
     id: '2',
     name: 'Jane Smith',
     role: 'Manager',
-    managerId: '1',
+    managerId: 'Hr',
     profile: {
       id: 'profile2',
       email: 'jane@domain.com',
@@ -125,11 +125,11 @@ export const DUMMY_USERS = [
     id: '3',
     name: 'Emily Taylor',
     role: 'Employee',
-    managerId: '2',
+    managerId: 'Manager',
     profile: {
       id: 'profile3',
       email: 'emily@domain.com',
-      password: 'hrsecure',
+      password: '1234',
       phone: '1122334455',
       jobHistory: [
         { id: 'job3', jobTitle: 'HR Specialist', startDate: '2019-05-01', description: 'Handled recruitment and onboarding' },

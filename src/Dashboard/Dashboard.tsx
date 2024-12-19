@@ -6,7 +6,7 @@ import { setUserDetails } from "../features/userSlice";
 import { LuHandMetal } from "react-icons/lu";
 import { ToggleBar } from "./Components/Toglebar";
 import { TaskBar } from "./Components/TaskBar";
-
+import { CountUser } from "./Components/userCount";
 
 export const Dashboard: React.FC = () => {
   const { id } = useParams<{ id: string }>();
@@ -20,9 +20,7 @@ export const Dashboard: React.FC = () => {
   }, [id, dispatch]);
 
   return (
-    <div
-      className="shadow-lg rounded-xl p-4 h-screen overflow-auto"
-    >
+    <div className="shadow-lg rounded-xl p-4 h-screen overflow-auto">
       {user ? (
         <div className="space-y-4">
           <div className="rounded-md text-black font-bold text-xl font-serif flex justify-between items-center">
@@ -30,7 +28,7 @@ export const Dashboard: React.FC = () => {
               Hello {user.name} <LuHandMetal />
             </div>
             <div>
-              <ToggleBar user={user} />
+              <ToggleBar />
             </div>
           </div>
           <div className="text-slate-400 font-serif text-sm md:text-base">
@@ -40,15 +38,14 @@ export const Dashboard: React.FC = () => {
       ) : (
         <p className="text-gray-500">No user found with ID: {id}</p>
       )}
-      <div className="mt-8 grid gap-6">
-        <div className="flex ">
-        <div className="bg-white p-4 rounded-lg shadow-md">
-          <h3 className="font-bold text-lg">Component 1</h3>
-          <p className="text-sm text-gray-600">Content for component 1</p>
-        </div>
-        <div className="bg-white p-4 rounded-lg shadow-md">
-          <TaskBar user= {user?.id}/>
-        </div>
+      <div className="mt-8 grid gap-6 md:grid-cols-1 lg:grid-cols-2 overflow-auto">
+        <div className="flex flex-wrap gap-4 md:flex-nowrap">
+          <div className="bg-white p-4 rounded-lg shadow-md w-full sm:w-1/2 md:w-full lg:w-auto">
+            <CountUser/>
+          </div>
+          <div className="bg-white p-4 rounded-lg shadow-md w-full sm:w-1/2 md:w-full lg:w-auto">
+            <TaskBar/>
+          </div>
         </div>
 
         <div className="bg-white p-4 rounded-lg shadow-md">

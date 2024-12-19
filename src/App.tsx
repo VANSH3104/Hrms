@@ -2,6 +2,8 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { Login } from "./Auth/Page/loginAuth";
 import { MainLayout } from "./Layout/MainLayout";
 import { Dashboard } from "./Dashboard/Dashboard";
+import { TaskAssignments } from "./Taskassignment/taskassignment";
+import { LeavePage } from "./leave/leavepage";
 function App() {
   return (
     <>
@@ -26,31 +28,32 @@ function App() {
                 <EmployeeDirectory />
               </MainLayout>
             }
-          />
-          <Route
+          /> */}
+          {/* <Route
             path="/employee-profiles/:id"
             element={
               <MainLayout>
                 <EmployeeProfiles />
               </MainLayout>
             }
-          />
+          />  */}
           <Route
             path="/leave-management/:id"
             element={
               <MainLayout>
-                <LeaveManagement />
+                <LeavePage />
               </MainLayout>
             }
           />
-          <Route
+          {/* <Route
             path="/attendance-tracking/:id"
             element={
               <MainLayout>
                 <AttendanceTracking />
               </MainLayout>
             }
-          />
+          /> */}
+          
           <Route
             path="/task-assignments/:id"
             element={
@@ -59,43 +62,35 @@ function App() {
               </MainLayout>
             }
           />
-          <Route
+          {/* <Route
             path="/performance-reviews/:id"
             element={
               <MainLayout>
                 <PerformanceReviews />
               </MainLayout>
             }
-          />
-          <Route
+          /> */}
+          {/* <Route
             path="/onboarding/:id"
             element={
               <MainLayout>
                 <OnboardingWorkflow />
               </MainLayout>
             }
-          />
-          <Route
+          /> */}
+          {/* <Route
             path="/search/:id"
             element={
               <MainLayout>
                 <EmployeeSearch />
               </MainLayout>
             }
-          />
-          <Route
+          /> */}
+          {/* <Route
             path="/settings/:id"
             element={
               <MainLayout>
                 <Settings />
-              </MainLayout>
-            }
-          />
-          <Route
-            path="/logout/:id"
-            element={
-              <MainLayout>
-                <Logout />
               </MainLayout>
             }
           /> */}

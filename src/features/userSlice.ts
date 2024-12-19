@@ -24,15 +24,16 @@ const userSlice = createSlice({
       const userIndex = state.users.findIndex((user) => user.id === updatedUser.id);
 
       if (userIndex !== -1) {
+        console.log("updating user:", updatedUser);
         state.users[userIndex] = updatedUser;
         if (state.selectedUser?.id === updatedUser.id) {
           state.selectedUser = updatedUser;
         }
+      } else {
+        console.error("User not found in state");
       }
     },
   },
 });
-
-// Export actions and reducer
 export const { setUserDetails, updateUserDetails } = userSlice.actions;
 export default userSlice.reducer;

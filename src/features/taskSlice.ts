@@ -3,7 +3,7 @@ import { Task } from "../Interfaces/interface";
 import { DUMMY_USERS } from "../dummyData/data";
 
 interface TaskState {
-  tasks: Task[]; // Correctly typed as an array of Task
+  tasks: Task[];
   selectedTask: Task | null;
 }
 
@@ -42,8 +42,6 @@ const taskSlice = createSlice({
     },
   },
 });
-
-// Export actions and reducer
 export const { setTaskDetails, updateTaskDetails, addTask, deleteTask } =
   taskSlice.actions;
 export default taskSlice.reducer;
