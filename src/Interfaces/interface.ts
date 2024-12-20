@@ -16,7 +16,8 @@ export interface User {
     leaveRequests: LeaveRequest[];
     attendance: Attendance[];
     tasks: Task[];
-
+    employeeLeave: EmployeeLeave;
+    notification?: Notification[];
   }
   
 export interface UserProfile {
@@ -45,7 +46,6 @@ export interface PerformanceMetrics {
 export interface LeaveRequest {
   id: string;
   employeeId: string;
-  employeeleave: EmployeeLeave;
   leaveType: 'Sick' | 'Vacation' | 'Other';
   startDate: string;
   endDate: string;
@@ -73,4 +73,11 @@ export interface EmployeeLeave {
   takenLeaves: number;
   usedNationalHolidays: number;
   remainingLeaves: number;
+}
+export interface Notification {
+  id: string;
+  recipientId: string;
+  message: string;
+  type: 'LeaveRequest' | 'Task' | 'Performance';
+  createdAt: string;
 }

@@ -3,12 +3,14 @@ import authReducer from "../features/authSlice"
 import useReducer  from '../features/userSlice'
 import taskReducer  from '../features/taskSlice'
 import leaveReducer from "../features/leaveSlice"
+import notificationReducer from '../features/notificationSlice'
 export const store = configureStore({
   reducer: {
     auth: authReducer,
     user: useReducer,
     task: taskReducer,
     leave: leaveReducer,
+    notification: notificationReducer,
   },
 })
 

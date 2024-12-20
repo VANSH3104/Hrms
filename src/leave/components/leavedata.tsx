@@ -64,24 +64,17 @@ export function Leavedata() {
   const user = useSelector((state: RootState) =>
     state.user.users.find((user) => user.id === id)
   );
-  const Leavesinfo = useSelector((state: RootState) => state.leave);
-  const leaveUser = Leavesinfo.leaveRequests
-    .filter((l) => l.employeeId === user?.id)
-    .flatMap((e) => e.employeeleave)[0];
+  const Leavesinfo = user?.employeeLeave
 
-  // Destructure the leaveUser object
-  const { totalLeaves, takenLeaves, nationalHolidays, usedNationalHolidays, remainingLeaves } = leaveUser;
-
-  // Wrap the desktopData initialization in useMemo to prevent unnecessary recalculations
   const desktopData = React.useMemo(() => {
     return [
-      { month: "january", desktop: totalLeaves, fill: "var(--color-january)" },
-      { month: "february", desktop: takenLeaves, fill: "var(--color-february)" },
-      { month: "march", desktop: nationalHolidays, fill: "var(--color-march)" },
-      { month: "april", desktop: usedNationalHolidays, fill: "var(--color-april)" },
-      { month: "may", desktop: remainingLeaves, fill: "var(--color-may)" },
+      { month: "january", desktop: Leavesinfo?.totalLeaves, fill: "var(--color-january)" },
+      { month: "february", desktop: Leavesinfo?.takenLeaves, fill: "var(--color-february)" },
+      { month: "march", desktop: Leavesinfo?.nationalHolidays, fill: "var(--color-march)" },
+      { month: "april", desktop: Leavesinfo?.usedNationalHolidays, fill: "var(--color-april)" },
+      { month: "may", desktop: Leavesinfo?.remainingLeaves, fill: "var(--color-may)" },
     ];
-  }, [totalLeaves, takenLeaves, nationalHolidays, usedNationalHolidays, remainingLeaves]);
+  }, [Leavesinfo?.totalLeaves, Leavesinfo?.takenLeaves, Leavesinfo?.nationalHolidays, Leavesinfo?.usedNationalHolidays, Leavesinfo?.remainingLeaves]);
 
   const id1 = "pie-interactive";
   const [activeMonth, setActiveMonth] = React.useState(desktopData[0].month);
