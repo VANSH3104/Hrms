@@ -77,7 +77,7 @@ export interface EmployeeLeave {
 export interface Notification {
   id: string;
   recipientId: string;
-  message: string;
+  recipientName: string;
   type: 'LeaveRequest' | 'Task' | 'Performance';
   createdAt: string;
 }

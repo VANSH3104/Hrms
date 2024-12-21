@@ -64,7 +64,7 @@ export const DUMMY_USERS = [
       usedNationalHolidays: 1,
       remainingLeaves: 36,
     },
-    notification :{},
+    notification :[],
   },
   {
     id: '2',
@@ -131,7 +131,7 @@ export const DUMMY_USERS = [
       usedNationalHolidays: 0,
       remainingLeaves: 41,
     },
-    notification :{},
+    notification :[],
   },
   {
     id: '3',
@@ -198,6 +198,6 @@ export const DUMMY_USERS = [
       usedNationalHolidays: 0,
       remainingLeaves: 43,
     },
-    notification :{},
+    notification :[],
   },
 ];

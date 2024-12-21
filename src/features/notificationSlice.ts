@@ -1,37 +1,28 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { Notification } from "../Interfaces/interface";
+import { User } from "../Interfaces/interface";
 import { DUMMY_USERS } from "../dummyData/data";
 
 interface NotificationState {
-  notifications: Notification[];
-  selectedNotification: Notification | null;
+  users: User[];
 }
 
 const initialState: NotificationState = {
-  notifications: DUMMY_USERS.flatMap((user) => user.notification || []),
-  selectedNotification: null,
+  users: DUMMY_USERS,
 };
-
 const notificationSlice = createSlice({
   name: "notification",
   initialState,
   reducers: {
-    setNotificationDetails: (state, action: PayloadAction<string>) => {
-      state.selectedNotification =
-        state.notifications.find((notification) => notification.id === action.payload) || null;
-    },
-    addNotification: (state, action: PayloadAction<Notification>) => {
-      state.notifications.push(action.payload);
-    },
-    deleteNotification: (state, action: PayloadAction<string>) => {
-      state.notifications = state.notifications.filter((notification) => notification.id !== action.payload);
-      if (state.selectedNotification?.id === action.payload) {
-        state.selectedNotification = null;
-      }
-    },
+    updateUserDetails: (state, action: PayloadAction<User>) => {
+        const newNotification = action.payload;
+        console.log(newNotification , "getting notification")
+        const userIndex = state.users.find((user) => user.role === "HR" ||  user.role === "Manager");
+        console.log(userIndex , "index")
+
+        
+      },
   },
 });
 
-export const { setNotificationDetails, addNotification, deleteNotification } =
-  notificationSlice.actions;
+export const { updateUserDetails } = notificationSlice.actions;
 export default notificationSlice.reducer;

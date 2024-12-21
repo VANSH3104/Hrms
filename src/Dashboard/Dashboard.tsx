@@ -7,6 +7,7 @@ import { LuHandMetal } from "react-icons/lu";
 import { ToggleBar } from "./Components/Toglebar";
 import { TaskBar } from "./Components/TaskBar";
 import { CountUser } from "./Components/userCount";
+import { NotificationCom } from "./Components/notification";
 export const Dashboard: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const dispatch = useDispatch();
@@ -26,7 +27,8 @@ export const Dashboard: React.FC = () => {
             <div className="flex gap-2 pt-5 text-lg md:text-xl">
               Hello {user.name} <LuHandMetal />
             </div>
-            <div>
+            <div className="flex gap-3">
+              {user.role !== "Employee" && <NotificationCom  />}
               <ToggleBar />
             </div>
           </div>
@@ -50,10 +52,6 @@ export const Dashboard: React.FC = () => {
         <div className="bg-white p-4 rounded-lg shadow-md">
           <h3 className="font-bold text-lg">Component 3</h3>
           <p className="text-sm text-gray-600">Content for component 3</p>
-        </div>
-        <div className="bg-white p-4 rounded-lg shadow-md">
-          <h3 className="font-bold text-lg">Component 4</h3>
-          <p className="text-sm text-gray-600">Content for component 4</p>
         </div>
       </div>
     </div>

@@ -4,16 +4,18 @@ import { useParams } from "react-router-dom";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "../../components/ui/dialog";
 import { RootState } from "@/store/store";
 import { addLeave } from "../../features/leaveSlice";
-import { LeaveRequest } from "../../Interfaces/interface";
-import { addNotification } from "@/features/notificationSlice";
-import { nanoid } from "@reduxjs/toolkit";
+import { LeaveRequest, User } from "../../Interfaces/interface";
+// import { addNotification } from "../../features/notificationSlice";
+import { updateUserDetails } from "../../features/userSlice";
 
 export const LeaveRequestForm = () => {
   const { id } = useParams<{ id: string }>();
   const user = useSelector((state: RootState) =>
     state.user.users.find((user) => user.id === id)
   );
-
+  const OtherUser =useSelector((state: RootState) =>
+    state.user.users.filter((user)=> user.id !== id))
+  console.log(OtherUser, "other")
   const dispatch = useDispatch();
 
   const [formData, setFormData] = useState({
@@ -34,18 +36,29 @@ export const LeaveRequestForm = () => {
     }));
   };
 
-  const handleNotify = ()=>{
-    const addnotify : Notification = {
-      id: nanoid.toString,
-      recipientId: string;
-      message: string;
-      type: 'LeaveRequest' | 'Task' | 'Performance';
-      createdAt: string;
-    }
-    if(user?.role === "Employee"){
-      dispatch(addNotification())
-    }
-  }
+  const handleNotify = () => {
+    const newNotification = {
+      id: `${Date.now()}`,
+      recipientname: user?.name,
+      type: "LeaveRequest",
+      createdAt: `${Date.now()}`,
+    };
+
+    OtherUser.forEach((user) => {
+      const updatedUser: User = {
+        ...user,
+        notification: [
+          ...(user.notification || []),
+          newNotification,
+        ],
+      };
+      console.log(updatedUser);
+      if (user?.role === "HR" || user?.role === "Manager") {
+        dispatch(updateUserDetails(updatedUser));
+      }
+    });
+  };
+  
 
   const handleSubmit = () => {
     if (!user) return;
@@ -55,7 +68,6 @@ export const LeaveRequestForm = () => {
       employeeId: user.id,
       startDate: formData.startDate,
       endDate: formData.endDate,
-      reason: formData.reason,
       leaveType: formData.leaveType,
       status: "Pending",
     };
@@ -114,16 +126,6 @@ export const LeaveRequestForm = () => {
                 type="date"
                 name="endDate"
                 value={formData.endDate}
-                onChange={handleChange}
-                className="mt-1 p-2 block w-full border rounded-md shadow-sm focus:ring focus:ring-opacity-50"
-              />
-            </div>
-
-            <div>
-              <label className="block text-sm font-medium text-gray-700">Reason</label>
-              <textarea
-                name="reason"
-                value={formData.reason}
                 onChange={handleChange}
                 className="mt-1 p-2 block w-full border rounded-md shadow-sm focus:ring focus:ring-opacity-50"
               />
