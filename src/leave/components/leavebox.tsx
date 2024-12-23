@@ -5,9 +5,11 @@ import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, Di
 import { RootState } from "@/store/store";
 import { LeaveRequest, User } from "../../Interfaces/interface";
 import { updateUserDetails } from "../../features/userSlice";
+import { nanoid } from "@reduxjs/toolkit";
 
 export const LeaveRequestForm = () => {
   const { id } = useParams<{ id: string }>();
+  const idpass = nanoid();
   const user = useSelector((state: RootState) =>
     state.user.users.find((user) => user.id === id)
   );
@@ -49,7 +51,7 @@ export const LeaveRequestForm = () => {
     if (!user) return;
 
     const newNotification: Notification = {
-      id: `${Date.now()}`,
+      id: `${idpass}`,
       employeeId: user.id,
       recipientname: user.name,
       type: formData.leaveType,
@@ -69,7 +71,7 @@ export const LeaveRequestForm = () => {
   const handleSubmit = () => {
     if (!user || !formData) return;
     const newLeaveRequest: LeaveRequest = {
-      id: `${Date.now()}`,
+      id: `${idpass}`,
       employeeId: user.id,
       startDate: formData.startDate,
       endDate: formData.endDate,

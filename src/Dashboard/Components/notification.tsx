@@ -14,7 +14,12 @@ export function NotificationCom() {
     (state: RootState) => state.user.users.filter((e: User) => e.id === id)
   );
   const dispatch = useDispatch();
-
+  const OtherUser = useSelector((state:RootState)=>state.user.users)
+   useEffect(() => {
+      if (OtherUser) {
+        localStorage.setItem("user", JSON.stringify(OtherUser));
+      }
+    }, [OtherUser]);
   useEffect(() => {
     const handleStorageChange = () => {
       try {
@@ -44,12 +49,49 @@ export function NotificationCom() {
 
   const handleAccept = (notificationId: string) => {
     console.log(`Accepted notification with ID: ${notificationId}`);
-    // Handle accept logic here
-  };
+    const notification = notifications.find((e) => e.id === notificationId);
+    if (!notification) {
+        console.log('Notification not found');
+        return;
+    }
+    const userId = notification.employeeId;
+    const leave = OtherUser.find((e) => e.id === userId);
+    if (!leave) {
+        console.log('User not found');
+        return;
+    }
+
+    console.log(leave);
+    const leaveRequest = leave.leaveRequests.find((e) => e.id === notificationId);
+    if (!leaveRequest) {
+        console.log('Leave request not found');
+        return;
+    }
+
+    console.log(leaveRequest);
+    const updatedLeaveRequests = leave.leaveRequests.map((request) =>
+        request.id === notificationId ? { ...request, status: 'Approved' } : request
+    );
+    const updatedEmployeeLeave = {
+        ...leave.employeeLeave,
+        totalLeaves: leave.employeeLeave.totalLeaves - 1,
+        takenLeaves: leave.employeeLeave.takenLeaves + 1,
+    };
+    const userUpdate: User = {
+        ...leave,
+        employeeLeave: updatedEmployeeLeave,
+        leaveRequests: updatedLeaveRequests,
+    };
+
+    console.log(userUpdate, 'after update');
+    dispatch(updateUserDetails(userUpdate));
+};
+
+
 
   const handleReject = (notificationId: string) => {
     console.log(`Rejected notification with ID: ${notificationId}`);
-    // Handle reject logic here
+    // Handle reject logic 
   };
 
   return (
