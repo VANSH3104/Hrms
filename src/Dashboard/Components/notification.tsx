@@ -1,63 +1,55 @@
 import { FaBell } from "react-icons/fa";
 import { Button } from "../../components/ui/button";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "../../components/ui/dialog";
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "../../components/ui/dialog";
 import { useParams } from "react-router-dom";
 import { RootState } from "@/store/store";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { updateUserDetails } from "../../features/userSlice";
+import { Notification, User } from "../../Interfaces/interface";
 
 export function NotificationCom() {
   const { id } = useParams<{ id: string }>();
   const users = useSelector(
-    (state: RootState) => state.user.users.filter((e)=>e.id === id)
-  )
-  const leaveUser = useSelector((state: RootState)=>state.user.users)
-  const dispatch = useDispatch()
+    (state: RootState) => state.user.users.filter((e: User) => e.id === id)
+  );
+  const dispatch = useDispatch();
+
   useEffect(() => {
-      const handleStorageChange = () => {
-        try {
-          const savedUser = localStorage.getItem("user");
-          if (savedUser) {
-            dispatch(updateUserDetails(JSON.parse(savedUser)));
-          }
-        } catch (error) {
-          console.error("Error loading data from localStorage:", error);
+    const handleStorageChange = () => {
+      try {
+        const savedUser = localStorage.getItem("user");
+        if (savedUser) {
+          const parsedUsers = JSON.parse(savedUser);
+          dispatch(updateUserDetails(parsedUsers));
         }
-      };
-      window.addEventListener("storage", handleStorageChange);
-      return () => {
-        window.removeEventListener("storage", handleStorageChange);
-      };
-    }, [dispatch]);
-  
-    useEffect(() => {
-      if (users) {
-        localStorage.setItem("user", JSON.stringify(users));
+      } catch (error) {
+        console.error("Error loading data from localStorage:", error);
       }
-    }, [users]);
-  const notifications = users[0]?.notification || []
-  console.log(notifications , "notification")
+    };
+
+    const broadcast = new BroadcastChannel('notifications');
+    broadcast.onmessage = (event) => {
+      dispatch(updateUserDetails(event.data));
+    };
+
+    window.addEventListener("storage", handleStorageChange);
+    return () => {
+      window.removeEventListener("storage", handleStorageChange);
+      broadcast.close();
+    };
+  }, [dispatch]);
+
+  const notifications = users[0]?.notification || [];
+
   const handleAccept = (notificationId: string) => {
     console.log(`Accepted notification with ID: ${notificationId}`);
-    const idleave = notifications.find((e)=>e.employeeId)
-    console.log(idleave)
-    const mainUser = leaveUser.filter((e)=>(e.id === idleave))
-    const leavereq = mainUser.filter((e)=>e.leaveRequests.filter((e)=>e.id ===notificationId))
-    console.log(leavereq)
-    
+    // Handle accept logic here
   };
 
   const handleReject = (notificationId: string) => {
     console.log(`Rejected notification with ID: ${notificationId}`);
-    users.filter((e)=>e.notification === null)
+    // Handle reject logic here
   };
 
   return (
@@ -71,29 +63,27 @@ export function NotificationCom() {
         <DialogContent className="sm:max-w-[425px]">
           <DialogHeader>
             <DialogTitle>Notifications</DialogTitle>
-            <DialogDescription>
-              Stay updated with the latest notifications.
-            </DialogDescription>
+            <DialogDescription>Stay updated with the latest notifications.</DialogDescription>
           </DialogHeader>
           <div className="grid gap-4 py-4">
             {notifications?.length > 0 ? (
-              notifications.map((notification) => (
+              notifications.map((notification: Notification) => (
                 <div key={notification.id} className="flex items-center justify-between p-2 border rounded-md shadow-sm">
                   <div>
                     <p className="text-sm font-medium">{notification.type}</p>
-                    <p className="text-xs text-gray-500">From: {notification.recipientName}</p>
+                    <p className="text-xs text-gray-500">From: {notification.recipientname}</p>
                     <p className="text-xs text-gray-400">{new Date(parseInt(notification.createdAt)).toLocaleString()}</p>
                   </div>
                   <div className="flex gap-2">
                     <Button
                       onClick={() => handleAccept(notification.id)}
-                      className="bg-green-500 text-white hover:bg-green-400"
+                      className="bg-green-500 text-white text-xs"
                     >
                       Accept
                     </Button>
                     <Button
                       onClick={() => handleReject(notification.id)}
-                      className="bg-red-500 text-white hover:bg-red-400"
+                      className="bg-red-500 text-white text-xs"
                     >
                       Reject
                     </Button>
@@ -101,7 +91,7 @@ export function NotificationCom() {
                 </div>
               ))
             ) : (
-              <p className="text-sm text-gray-500">No notifications available.</p>
+              <div>No notifications yet.</div>
             )}
           </div>
         </DialogContent>

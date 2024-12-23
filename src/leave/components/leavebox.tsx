@@ -13,32 +13,19 @@ export const LeaveRequestForm = () => {
   );
   const dispatch = useDispatch();
   const OtherUsers = useSelector((state: RootState) =>
-    state.user.users.filter((user) => user.id !== id)
+    state.user.users.filter((user) => user.role === "HR")[0]
   );
-
-  useEffect(() => {
-    const handleStorageChange = () => {
-      try {
-        const savedUser = localStorage.getItem("user");
-        if (savedUser) {
-          dispatch(updateUserDetails(JSON.parse(savedUser)));
-        }
-      } catch (error) {
-        console.error("Error loading data from localStorage:", error);
-      }
-    };
-
-    window.addEventListener("storage", handleStorageChange);
-    return () => {
-      window.removeEventListener("storage", handleStorageChange);
-    };
-  }, [dispatch]);
-
+  
   useEffect(() => {
     if (user) {
       localStorage.setItem("user", JSON.stringify(user));
     }
   }, [user]);
+  useEffect(() => {
+    if (OtherUsers) {
+      localStorage.setItem("user", JSON.stringify(OtherUsers));
+    }
+  }, [OtherUsers]);
 
   const [formData, setFormData] = useState({
     id: "",
@@ -61,45 +48,26 @@ export const LeaveRequestForm = () => {
   const handleNotify = () => {
     if (!user) return;
 
-    const newNotification = {
+    const newNotification: Notification = {
       id: `${Date.now()}`,
       employeeId: user.id,
       recipientname: user.name,
       type: formData.leaveType,
       createdAt: `${Date.now()}`,
     };
-
-    // Debugging: Log notifications before update
     console.log("Before Notify", OtherUsers);
 
-    OtherUsers.forEach((otherUser: User) => {
-      if (otherUser.role === "HR" || otherUser.role === "Manager") {
-        const updatedNotifications = [
-          ...(otherUser.notification || []),
-          newNotification,
-        ];
-
-        // Debugging: Log updated notifications
-        console.log("Updated Notifications for", otherUser.name, updatedNotifications);
-
-        // Update Redux state for other users
-        dispatch(updateUserDetails({
-          ...otherUser,
-          notification: updatedNotifications,
-        }));
-
-        // Save updated user state to localStorage for sync
-        localStorage.setItem("user", JSON.stringify({
-          ...otherUser,
-          notification: updatedNotifications,
-        }));
-      }
-    });
+    const updatedUser2: User = {
+      ...OtherUsers,
+      notification: [...OtherUsers.notification, newNotification],
+    };
+    dispatch(updateUserDetails(updatedUser2))
+    console.log(updatedUser2 , "user 2")
   };
+
 
   const handleSubmit = () => {
     if (!user || !formData) return;
-
     const newLeaveRequest: LeaveRequest = {
       id: `${Date.now()}`,
       employeeId: user.id,
