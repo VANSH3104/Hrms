@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Calendar } from "../../components/ui/calendar";
 import { useSelector } from "react-redux";
 import { RootState } from "@/store/store";
@@ -17,9 +17,19 @@ export interface Task {
 
 export const TaskBar = () => {
   const { id } = useParams<{ id: string }>();
+  const [isDarkMode, setIsDarkMode] = useState<boolean>(false);
   const user = useSelector((state: RootState) =>
     state.user.users.find((user) => user.id === id)
   );
+  useEffect(() => {
+      const savedTheme = localStorage.getItem("theme");
+      if (savedTheme) {
+        setIsDarkMode(savedTheme === "dark");
+      }
+      else{
+        setIsDarkMode(false)
+      }
+    }, []);
   const location = useLocation();
   const [date, setDate] = useState<Date>(new Date());
   const tasksInfo = useSelector((state: RootState) => state.task);
@@ -34,13 +44,13 @@ export const TaskBar = () => {
     setDate(value);
   };
   return (
-    <div className="gap-6 overflow-hidden items-center">
-      <div className={isTaskAssignmentsPath ? "md:flex gap-4 ":"grid gap-4"}>
+    <div className={`gap-6 overflow-hidden items-center ${isDarkMode ? "bg-gray-800" : ""}`}>
+      <div className={"md:flex gap-4 "}>
         <div className="flex md:w-1/8">
           <Calendar
             onDayClick={handleDateClick}
             value={date}
-            className="bg-white shadow-lg rounded-xl"
+            className="bg-white shadow-xl rounded-xl"
           />
         </div>
         <div>

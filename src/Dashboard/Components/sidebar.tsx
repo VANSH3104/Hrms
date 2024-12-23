@@ -61,11 +61,11 @@ export const Sidebar: React.FC = () => {
           {(user?.managerId === "Null" || user?.managerId === "Hr") && (
             <li>
               <Link
-                to={`/employee-profiles/${id}`}
+                to={`/employee/${id}`}
                 className={`block py-1 px-4 hover:bg-indigo-100 hover:border-l-8 hover:border-indigo-400 rounded ${
                   isDarkMode ? "text-white hover:text-gray-700" : "text-gray-800 hover:text-gray-600"
                 } ${
-                  isActive(`/employee-profiles/${id}`)
+                  isActive(`/employee/${id}`)
                     ? "bg-indigo-200 border-l-8 border-indigo-400"
                     : ""
                 }`}
@@ -100,38 +100,6 @@ export const Sidebar: React.FC = () => {
           </li>
           <li>
             <Link
-              to={`/performance-reviews/${id}`}
-              className={`block py-1 px-4 hover:bg-indigo-100 hover:border-l-8 hover:border-indigo-400 rounded ${isDarkMode ? "text-white hover:text-gray-700" : "text-gray-800 hover:text-gray-600"} ${isActive(`/performance-reviews/${id}`) ? "bg-indigo-200 border-l-8 border-indigo-400" : ""}`}
-            >
-              Performance Reviews
-            </Link>
-          </li>
-          <li>
-            <Link
-              to={`/onboarding/${id}`}
-              className={`block py-1 px-4 hover:bg-indigo-100 hover:border-l-8 hover:border-indigo-400 rounded ${isDarkMode ? "text-white hover:text-gray-700" : "text-gray-800 hover:text-gray-600"} ${isActive(`/onboarding/${id}`) ? "bg-indigo-200 border-l-8 border-indigo-400" : ""}`}
-            >
-              Onboarding Workflow
-            </Link>
-          </li>
-          <li>
-            <Link
-              to={`/search/${id}`}
-              className={`block py-2 px-4 hover:bg-indigo-100 hover:border-l-8 hover:border-indigo-400 rounded ${isDarkMode ? "text-white hover:text-gray-700" : "text-gray-800 hover:text-gray-600"} ${isActive(`/search/${id}`) ? "bg-indigo-200 border-l-8 border-indigo-400" : ""}`}
-            >
-              Employee Search
-            </Link>
-          </li>
-          <li>
-            <Link
-              to={`/settings/${id}`}
-              className={`block py-2 px-4 hover:bg-indigo-100 hover:border-l-8 hover:border-indigo-400 rounded ${isDarkMode ? "text-white hover:text-gray-700" : "text-gray-800 hover:text-gray-600"} ${isActive(`/settings/${id}`) ? "bg-indigo-200 border-l-8 border-indigo-400" : ""}`}
-            >
-              Settings
-            </Link>
-          </li>
-          <li>
-            <Link
               to={`/`}
               className={`block py-2 px-4 hover:bg-indigo-100 hover:border-l-8 hover:border-indigo-400 rounded ${isDarkMode ? "text-white hover:text-gray-700" : "text-gray-800 hover:text-gray-600"} ${isActive(`/logout/${id}`) ? "bg-indigo-200 border-l-8 border-indigo-400" : ""}`}
             >
@@ -139,11 +107,11 @@ export const Sidebar: React.FC = () => {
             </Link>
           </li>
         </ul>
-        <div className="flex w-full pt-8">
+        {/* <div className="flex w-full pt-8">
           <Button onClick={toggleTheme} className="bg-indigo-500 hover:bg-indigo-400 w-full">
             {isDarkMode ? "Light" : "Dark"}
           </Button>
-        </div>
+        </div> */}
       </nav>
     </div>
   );

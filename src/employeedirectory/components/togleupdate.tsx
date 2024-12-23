@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "../../components/ui/dialog";
-import { Avatar, AvatarFallback } from "../../components/ui/avatar";
+import { CiEdit } from "react-icons/ci";
 import { RootState } from "@/store/store";
 import { updateUserDetails } from "../../features/userSlice";
 import { User } from "../../Interfaces/interface";
 
-export const ToggleBar = ({id}: {id:string}) => {
+export const Toggleupdate = ({id}: {id:string}) => {
   const user = useSelector((state: RootState) =>
     state.user.users.find((user) => user.id === id)
   );
@@ -88,15 +88,7 @@ export const ToggleBar = ({id}: {id:string}) => {
     <div>
       <Dialog>
         <DialogTrigger>
-          <div className="rounded-md shadow-md flex px-3 cursor-pointer">
-            <Avatar>
-              <AvatarFallback>{user?.name?.charAt(0)}</AvatarFallback>
-            </Avatar>
-            <div className="pl-3 text-lg">
-              {user?.name}
-              <div className="text-sm text-gray-500">{user?.role}</div>
-            </div>
-          </div>
+          <CiEdit />
         </DialogTrigger>
         <DialogContent>
           <DialogHeader>

@@ -10,23 +10,54 @@ import {
 } from "../../components/ui/dialog";
 import { useParams } from "react-router-dom";
 import { RootState } from "@/store/store";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect } from "react";
+import { updateUserDetails } from "../../features/userSlice";
 
 export function NotificationCom() {
   const { id } = useParams<{ id: string }>();
   const users = useSelector(
     (state: RootState) => state.user.users.filter((e)=>e.id === id)
   )
+  const leaveUser = useSelector((state: RootState)=>state.user.users)
+  const dispatch = useDispatch()
+  useEffect(() => {
+      const handleStorageChange = () => {
+        try {
+          const savedUser = localStorage.getItem("user");
+          if (savedUser) {
+            dispatch(updateUserDetails(JSON.parse(savedUser)));
+          }
+        } catch (error) {
+          console.error("Error loading data from localStorage:", error);
+        }
+      };
+      window.addEventListener("storage", handleStorageChange);
+      return () => {
+        window.removeEventListener("storage", handleStorageChange);
+      };
+    }, [dispatch]);
+  
+    useEffect(() => {
+      if (users) {
+        localStorage.setItem("user", JSON.stringify(users));
+      }
+    }, [users]);
   const notifications = users[0]?.notification || []
   console.log(notifications , "notification")
   const handleAccept = (notificationId: string) => {
     console.log(`Accepted notification with ID: ${notificationId}`);
-    // Implement logic to handle accept action
+    const idleave = notifications.find((e)=>e.employeeId)
+    console.log(idleave)
+    const mainUser = leaveUser.filter((e)=>(e.id === idleave))
+    const leavereq = mainUser.filter((e)=>e.leaveRequests.filter((e)=>e.id ===notificationId))
+    console.log(leavereq)
+    
   };
 
   const handleReject = (notificationId: string) => {
     console.log(`Rejected notification with ID: ${notificationId}`);
-    // Implement logic to handle reject action
+    users.filter((e)=>e.notification === null)
   };
 
   return (

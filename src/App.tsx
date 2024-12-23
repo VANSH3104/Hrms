@@ -4,6 +4,8 @@ import { MainLayout } from "./Layout/MainLayout";
 import { Dashboard } from "./Dashboard/Dashboard";
 import { TaskAssignments } from "./Taskassignment/taskassignment";
 import { LeavePage } from "./leave/leavepage";
+import { EmployeeDirectory } from "./employeedirectory/employee";
+import { Attendance } from "./attendence/attendence";
 function App() {
   return (
     <>
@@ -21,14 +23,14 @@ function App() {
               </MainLayout>
             }
           />
-          {/* <Route
-            path="/employee-directory/:id"
+          <Route
+            path="/employee/:id"
             element={
               <MainLayout>
                 <EmployeeDirectory />
               </MainLayout>
             }
-          /> */}
+          />
           {/* <Route
             path="/employee-profiles/:id"
             element={
@@ -45,14 +47,14 @@ function App() {
               </MainLayout>
             }
           />
-          {/* <Route
+          <Route
             path="/attendance-tracking/:id"
             element={
               <MainLayout>
-                <AttendanceTracking />
+                <Attendance />
               </MainLayout>
             }
-          /> */}
+          />
           
           <Route
             path="/task-assignments/:id"

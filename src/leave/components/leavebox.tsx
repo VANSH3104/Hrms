@@ -1,11 +1,9 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "../../components/ui/dialog";
 import { RootState } from "@/store/store";
-import { addLeave } from "../../features/leaveSlice";
 import { LeaveRequest, User } from "../../Interfaces/interface";
-// import { addNotification } from "../../features/notificationSlice";
 import { updateUserDetails } from "../../features/userSlice";
 
 export const LeaveRequestForm = () => {
@@ -13,10 +11,34 @@ export const LeaveRequestForm = () => {
   const user = useSelector((state: RootState) =>
     state.user.users.find((user) => user.id === id)
   );
-  const OtherUser =useSelector((state: RootState) =>
-    state.user.users.filter((user)=> user.id !== id))
-  console.log(OtherUser, "other")
   const dispatch = useDispatch();
+  const OtherUsers = useSelector((state: RootState) =>
+    state.user.users.filter((user) => user.id !== id)
+  );
+
+  useEffect(() => {
+    const handleStorageChange = () => {
+      try {
+        const savedUser = localStorage.getItem("user");
+        if (savedUser) {
+          dispatch(updateUserDetails(JSON.parse(savedUser)));
+        }
+      } catch (error) {
+        console.error("Error loading data from localStorage:", error);
+      }
+    };
+
+    window.addEventListener("storage", handleStorageChange);
+    return () => {
+      window.removeEventListener("storage", handleStorageChange);
+    };
+  }, [dispatch]);
+
+  useEffect(() => {
+    if (user) {
+      localStorage.setItem("user", JSON.stringify(user));
+    }
+  }, [user]);
 
   const [formData, setFormData] = useState({
     id: "",
@@ -37,31 +59,46 @@ export const LeaveRequestForm = () => {
   };
 
   const handleNotify = () => {
+    if (!user) return;
+
     const newNotification = {
       id: `${Date.now()}`,
-      recipientname: user?.name,
-      type: "LeaveRequest",
+      employeeId: user.id,
+      recipientname: user.name,
+      type: formData.leaveType,
       createdAt: `${Date.now()}`,
     };
 
-    OtherUser.forEach((user) => {
-      const updatedUser: User = {
-        ...user,
-        notification: [
-          ...(user.notification || []),
+    // Debugging: Log notifications before update
+    console.log("Before Notify", OtherUsers);
+
+    OtherUsers.forEach((otherUser: User) => {
+      if (otherUser.role === "HR" || otherUser.role === "Manager") {
+        const updatedNotifications = [
+          ...(otherUser.notification || []),
           newNotification,
-        ],
-      };
-      console.log(updatedUser);
-      if (user?.role === "HR" || user?.role === "Manager") {
-        dispatch(updateUserDetails(updatedUser));
+        ];
+
+        // Debugging: Log updated notifications
+        console.log("Updated Notifications for", otherUser.name, updatedNotifications);
+
+        // Update Redux state for other users
+        dispatch(updateUserDetails({
+          ...otherUser,
+          notification: updatedNotifications,
+        }));
+
+        // Save updated user state to localStorage for sync
+        localStorage.setItem("user", JSON.stringify({
+          ...otherUser,
+          notification: updatedNotifications,
+        }));
       }
     });
   };
-  
 
   const handleSubmit = () => {
-    if (!user) return;
+    if (!user || !formData) return;
 
     const newLeaveRequest: LeaveRequest = {
       id: `${Date.now()}`,
@@ -72,7 +109,16 @@ export const LeaveRequestForm = () => {
       status: "Pending",
     };
 
-    dispatch(addLeave(newLeaveRequest));
+    const updatedUser: User = {
+      ...user,
+      leaveRequests: [...user.leaveRequests, newLeaveRequest],
+    };
+
+    // Dispatch updated user details in Redux
+    dispatch(updateUserDetails(updatedUser));
+
+    // Call notify after updating user details
+    handleNotify();
   };
 
   return (
@@ -91,7 +137,6 @@ export const LeaveRequestForm = () => {
             onSubmit={(e) => {
               e.preventDefault();
               handleSubmit();
-              handleNotify();
             }}
           >
             <div>
@@ -104,8 +149,7 @@ export const LeaveRequestForm = () => {
               >
                 <option value="Sick">Sick</option>
                 <option value="Vacation">Vacation</option>
-                <option value="Emergency">Emergency</option>
-                <option value="Personal">Personal</option>
+                <option value="Emergency">Other</option>
               </select>
             </div>
 

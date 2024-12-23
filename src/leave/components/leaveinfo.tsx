@@ -6,18 +6,16 @@ export const Leave = ({ id }: { id: string }) => {
     state.user.users.find((user) => user.id === id)
   );
 
-  const leaveRequests = useSelector((state: RootState) =>
-    state.leave.leaveRequests.filter((leave) => leave.employeeId === user?.id)
-  );
+  const leaveRequests = user?.leaveRequests
 
-  if (leaveRequests.length === 0)
+  if (leaveRequests?.length === 0)
     return <div>No leave requests found for this user.</div>;
 
   return (
     <div className="p-4 bg-white shadow-lg rounded-md space-y-6">
       <h3 className="text-xl font-semibold text-gray-800 mb-4">Leave Requests</h3>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-        {leaveRequests.map((leave) => (
+        {leaveRequests?.map((leave) => (
           <div
             key={leave.id}
             className="p-4 bg-gray-50 shadow-sm rounded-md flex flex-col space-y-3"

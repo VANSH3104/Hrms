@@ -65,6 +65,11 @@ export const DUMMY_USERS = [
       remainingLeaves: 36,
     },
     notification :[],
+    attendenceList : {
+      employeeId: '1',
+      present: 4,
+      absent: 2,
+    },
   },
   {
     id: '2',
@@ -132,6 +137,11 @@ export const DUMMY_USERS = [
       remainingLeaves: 41,
     },
     notification :[],
+    attendenceList : {
+      employeeId: '2',
+      present: 5,
+      absent: 1,
+    },
   },
   {
     id: '3',
@@ -199,5 +209,10 @@ export const DUMMY_USERS = [
       remainingLeaves: 43,
     },
     notification :[],
+    attendenceList : {
+      employeeId: '3',
+      present: 5,
+      absent: 0,
+    },
   },
 ];

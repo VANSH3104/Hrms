@@ -19,6 +19,9 @@ const userSlice = createSlice({
     setUserDetails: (state, action: PayloadAction<string>) => {
       state.selectedUser = state.users.find((user) => user.id === action.payload) || null;
     },
+    addUser: (state , action: PayloadAction<string>)=>{
+      state.users.push(action.payload)
+    },
     updateUserDetails: (state, action: PayloadAction<User>) => {
       const updatedUser = action.payload;
       const userIndex = state.users.findIndex((user) => user.id === updatedUser.id);
@@ -33,7 +36,14 @@ const userSlice = createSlice({
         console.error("User not found in state");
       }
     },
+    deleteUser: (state, action: PayloadAction<User>)=>{
+      const id = action.payload
+      state.users = state.users.filter((user)=>user.id !== id);
+      if (state.selectedUser?.id === id) {
+        state.selectedUser = null;
+      }
+    }
   },
 });
-export const { setUserDetails, updateUserDetails } = userSlice.actions;
+export const { setUserDetails, updateUserDetails , deleteUser , addUser } = userSlice.actions;
 export default userSlice.reducer;

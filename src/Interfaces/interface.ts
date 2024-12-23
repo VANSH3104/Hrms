@@ -5,6 +5,7 @@ export interface HRMSState {
     performance?: PerformanceMetrics
     leaveRequests?: LeaveRequest[];
     attendance?: Attendance[];
+    attendenceList: AttendanceList;
     tasks?: Task[];
 }
 export interface User {
@@ -18,6 +19,7 @@ export interface User {
     tasks: Task[];
     employeeLeave: EmployeeLeave;
     notification?: Notification[];
+    attendenceList: AttendanceList; 
   }
   
 export interface UserProfile {
@@ -76,8 +78,14 @@ export interface EmployeeLeave {
 }
 export interface Notification {
   id: string;
+  employeeId: string,
   recipientId: string;
   recipientName: string;
   type: 'LeaveRequest' | 'Task' | 'Performance';
   createdAt: string;
+}
+export interface AttendanceList {
+  employeeId: string;
+  present: number;
+  absent: number;
 }

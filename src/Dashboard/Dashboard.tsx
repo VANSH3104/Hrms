@@ -2,16 +2,41 @@ import React, { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../store/store";
-import { setUserDetails } from "../features/userSlice";
+import { setUserDetails, updateUserDetails } from "../features/userSlice";
 import { LuHandMetal } from "react-icons/lu";
 import { ToggleBar } from "./Components/Toglebar";
 import { TaskBar } from "./Components/TaskBar";
 import { CountUser } from "./Components/userCount";
 import { NotificationCom } from "./Components/notification";
+import { AttendanceShow } from "./Components/attendenceshow";
+
 export const Dashboard: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const dispatch = useDispatch();
   const user = useSelector((state: RootState) => state.user.selectedUser);
+
+  useEffect(() => {
+    const handleStorageChange = () => {
+      try {
+        const savedUser = localStorage.getItem("user");
+        if (savedUser) {
+          dispatch(updateUserDetails(JSON.parse(savedUser)));
+        }
+      } catch (error) {
+        console.error("Error loading data from localStorage:", error);
+      }
+    };
+    window.addEventListener("storage", handleStorageChange);
+    return () => {
+      window.removeEventListener("storage", handleStorageChange);
+    };
+  }, [dispatch]);
+
+  useEffect(() => {
+    if (user) {
+      localStorage.setItem("user", JSON.stringify(user));
+    }
+  }, [user]);
 
   useEffect(() => {
     if (id) {
@@ -28,8 +53,8 @@ export const Dashboard: React.FC = () => {
               Hello {user.name} <LuHandMetal />
             </div>
             <div className="flex gap-3">
-              {user.role !== "Employee" && <NotificationCom  />}
-              <ToggleBar />
+              {user.role !== "Employee" && <NotificationCom />}
+              <ToggleBar id={id} />
             </div>
           </div>
           <div className="text-slate-400 font-serif text-sm md:text-base">
@@ -39,19 +64,15 @@ export const Dashboard: React.FC = () => {
       ) : (
         <p className="text-gray-500">No user found with ID: {id}</p>
       )}
-      <div className="mt-8 grid gap-6 md:grid-cols-1 lg:grid-cols-2 overflow-auto">
-        <div className="flex flex-wrap gap-4 md:flex-nowrap">
-          <div className="bg-white p-4 rounded-lg shadow-md w-full sm:w-1/2 md:w-full lg:w-auto">
-            <CountUser/>
-          </div>
-          <div className="bg-white p-4 rounded-lg shadow-md w-full sm:w-1/2 md:w-full lg:w-auto">
-            <TaskBar/>
-          </div>
-        </div>
-
+      <div className="mt-8 grid gap-6 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
         <div className="bg-white p-4 rounded-lg shadow-md">
-          <h3 className="font-bold text-lg">Component 3</h3>
-          <p className="text-sm text-gray-600">Content for component 3</p>
+          <CountUser />
+        </div>
+        <div className="bg-white p-4 rounded-lg shadow-md">
+          <AttendanceShow />
+        </div>
+        <div className="bg-white p-4 rounded-lg shadow-md w-full xl:col-span-2">
+          <TaskBar />
         </div>
       </div>
     </div>
