@@ -6,6 +6,7 @@ import { TaskAssignments } from "./Taskassignment/taskassignment";
 import { LeavePage } from "./leave/leavepage";
 import { EmployeeDirectory } from "./employeedirectory/employee";
 import { Attendance } from "./attendence/attendence";
+import { EmployeeSearch } from "./employeedirectory/components/employeeShow";
 function App() {
   return (
     <>
@@ -52,6 +53,14 @@ function App() {
             element={
               <MainLayout>
                 <Attendance />
+              </MainLayout>
+            }
+          />
+          <Route
+            path="/employeeSearch/:id"
+            element={
+              <MainLayout>
+                <EmployeeSearch />
               </MainLayout>
             }
           />

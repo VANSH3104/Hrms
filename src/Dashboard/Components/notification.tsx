@@ -20,6 +20,11 @@ export function NotificationCom() {
         localStorage.setItem("user", JSON.stringify(OtherUser));
       }
     }, [OtherUser]);
+    useEffect(() => {
+      if (users) {
+        localStorage.setItem("user", JSON.stringify(users));
+      }
+    }, [users]);
   useEffect(() => {
     const handleStorageChange = () => {
       try {
@@ -67,7 +72,6 @@ export function NotificationCom() {
         console.log('Leave request not found');
         return;
     }
-
     console.log(leaveRequest);
     const updatedLeaveRequests = leave.leaveRequests.map((request) =>
         request.id === notificationId ? { ...request, status: 'Approved' } : request
@@ -85,13 +89,63 @@ export function NotificationCom() {
 
     console.log(userUpdate, 'after update');
     dispatch(updateUserDetails(userUpdate));
+    const updatedNotifications = notifications.filter((e) => e.id !== notificationId);
+    console.log(updatedNotifications , "notiiiii")
+const update: User = {
+  ...users[0],
+  notification: updatedNotifications,
+};
+console.log(update , "uppdpdadpapd")
+
+dispatch(updateUserDetails(update));
+
 };
 
 
 
   const handleReject = (notificationId: string) => {
     console.log(`Rejected notification with ID: ${notificationId}`);
-    // Handle reject logic 
+    console.log(`Accepted notification with ID: ${notificationId}`);
+    const notification = notifications.find((e) => e.id === notificationId);
+    if (!notification) {
+        console.log('Notification not found');
+        return;
+    }
+    const userId = notification.employeeId;
+    const leave = OtherUser.find((e) => e.id === userId);
+    if (!leave) {
+        console.log('User not found');
+        return;
+    }
+
+    console.log(leave);
+    const leaveRequest = leave.leaveRequests.find((e) => e.id === notificationId);
+    if (!leaveRequest) {
+        console.log('Leave request not found');
+        return;
+    }
+    console.log(leaveRequest);
+    const updatedLeaveRequests = leave.leaveRequests.map((request) =>
+        request.id === notificationId ? { ...request, status: 'Rejected' } : request
+    );
+    const userUpdate: User = {
+        ...leave,
+        leaveRequests: updatedLeaveRequests,
+    };
+
+    console.log(userUpdate, 'after update');
+    dispatch(updateUserDetails(userUpdate));
+    const updatedNotifications = notifications.filter((e) => e.id !== notificationId);
+    console.log(updatedNotifications , "notiiiii")
+const update: User = {
+  ...users[0],
+  notification: updatedNotifications,
+};
+console.log(update , "uppdpdadpapd")
+
+dispatch(updateUserDetails(update));
+
+    
   };
 
   return (

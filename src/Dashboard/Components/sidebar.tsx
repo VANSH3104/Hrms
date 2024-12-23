@@ -74,6 +74,22 @@ export const Sidebar: React.FC = () => {
               </Link>
             </li>
           )}
+          {(user?.role === "Employee") && (
+            <li>
+              <Link
+                to={`/employeeSearch/${id}`}
+                className={`block py-1 px-4 hover:bg-indigo-100 hover:border-l-8 hover:border-indigo-400 rounded ${
+                  isDarkMode ? "text-white hover:text-gray-700" : "text-gray-800 hover:text-gray-600"
+                } ${
+                  isActive(`/employee/${id}`)
+                    ? "bg-indigo-200 border-l-8 border-indigo-400"
+                    : ""
+                }`}
+              >
+                Employee Directory
+              </Link>
+            </li>
+          )}
           <li>
             <Link
               to={`/leave-management/${id}`}
