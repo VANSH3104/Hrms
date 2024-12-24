@@ -1,10 +1,16 @@
-import { Button } from "../../components/ui/button";
+import { IoMdExit } from "react-icons/io";
+import { FaTasks } from "react-icons/fa";
+import { MdPushPin } from "react-icons/md";
+import { CiMail } from "react-icons/ci";
+import { FaSearch } from "react-icons/fa";
 import { Link, useParams, useLocation } from "react-router-dom";
+import { TbListDetails } from "react-icons/tb";
 import { useEffect, useState } from "react";
 import { RxDashboard } from "react-icons/rx";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../store/store";
 import { setUserDetails } from "../../features/userSlice";
+import { Button } from "../../components/ui/button";
 export const Sidebar: React.FC = () => {
   const [isDarkMode, setIsDarkMode] = useState<boolean>(false);
   const { id } = useParams<{ id: string }>();
@@ -54,7 +60,22 @@ export const Sidebar: React.FC = () => {
               to={`/dashboard/${id}`}
               className={`block py-1 px-4 hover:bg-indigo-100 hover:border-l-8 hover:border-indigo-400 rounded ${isDarkMode ? "text-white hover:text-gray-700" : "text-gray-800 hover:text-gray-600"} ${isActive(`/dashboard/${id}`) ? "bg-indigo-200 border-l-8 border-indigo-400" : ""}`}
             ><div className="flex gap-1 text-center">
-                <RxDashboard className="pt-1 h-full" /> Dashboard
+                <RxDashboard className="pt-1.5 h-full" /> 
+              <div className="text-xl">
+                Dashboard
+              </div>  
+            </div>
+            </Link>
+          </li>
+          <li>
+            <Link
+              to={`/userdetails/${id}`}
+              className={`block py-1 px-4 hover:bg-indigo-100 hover:border-l-8 hover:border-indigo-400 rounded ${isDarkMode ? "text-white hover:text-gray-700" : "text-gray-800 hover:text-gray-600"} ${isActive(`/userdetails/${id}`) ? "bg-indigo-200 border-l-8 border-indigo-400" : ""}`}
+            ><div className="flex gap-1 text-center">
+                <TbListDetails className="pt-1.5 h-full" /> 
+              <div className="text-xl">
+                Overview
+              </div>  
             </div>
             </Link>
           </li>
@@ -70,7 +91,12 @@ export const Sidebar: React.FC = () => {
                     : ""
                 }`}
               >
-                Employee Directory
+                <div className="flex gap-1 text-center">
+                <FaSearch className="pt-1.5 h-full" /> 
+                <div className="text-xl">
+                  Employee
+                  </div>
+                </div>  
               </Link>
             </li>
           )}
@@ -86,7 +112,12 @@ export const Sidebar: React.FC = () => {
                     : ""
                 }`}
               >
-                Employee Directory
+                <div className="flex gap-1 text-center">
+                <FaSearch className="pt-1.5 h-full" /> 
+                <div className="text-xl">
+                  Employee
+                  </div>
+                </div> 
               </Link>
             </li>
           )}
@@ -95,7 +126,12 @@ export const Sidebar: React.FC = () => {
               to={`/leave-management/${id}`}
               className={`block py-1 px-4 hover:bg-indigo-100 hover:border-l-8 hover:border-indigo-400 rounded ${isDarkMode ? "text-white hover:text-gray-700" : "text-gray-800 hover:text-gray-600"} ${isActive(`/leave-management/${id}`) ? "bg-indigo-200 border-l-8 border-indigo-400" : ""}`}
             >
-              Leave Management
+              <div className="flex gap-1 text-center">
+                <CiMail  className="pt-1.5 h-full" />
+                <div className="text-xl">
+                  Leave
+                  </div>
+                </div>
             </Link>
           </li>
           <li>
@@ -103,7 +139,12 @@ export const Sidebar: React.FC = () => {
               to={`/attendance-tracking/${id}`}
               className={`block py-1 px-4 hover:bg-indigo-100 hover:border-l-8 hover:border-indigo-400 rounded ${isDarkMode ? "text-white hover:text-gray-700" : "text-gray-800 hover:text-gray-600"} ${isActive(`/attendance-tracking/${id}`) ? "bg-indigo-200 border-l-8 border-indigo-400" : ""}`}
             >
-              Attendance Tracking
+              <div className="flex gap-1 text-center">
+                <MdPushPin  className="pt-2 h-full" />
+                <div className="text-xl">
+                  Attendence
+                </div>
+                </div>
             </Link>
           </li>
           <li>
@@ -111,7 +152,12 @@ export const Sidebar: React.FC = () => {
               to={`/task-assignments/${id}`}
               className={`block py-1 px-4 hover:bg-indigo-100 hover:border-l-8 hover:border-indigo-400 rounded ${isDarkMode ? "text-white hover:text-gray-700" : "text-gray-800 hover:text-gray-600"} ${isActive(`/task-assignments/${id}`) ? "bg-indigo-200 border-l-8 border-indigo-400" : ""}`}
             >
-              Task Assignments
+              <div className="flex gap-1 text-center">
+                <FaTasks  className="pt-1.5  h-full" /> 
+                <div className="text-xl">
+                  Task
+                </div>
+                </div>
             </Link>
           </li>
           <li>
@@ -119,15 +165,20 @@ export const Sidebar: React.FC = () => {
               to={`/`}
               className={`block py-2 px-4 hover:bg-indigo-100 hover:border-l-8 hover:border-indigo-400 rounded ${isDarkMode ? "text-white hover:text-gray-700" : "text-gray-800 hover:text-gray-600"} ${isActive(`/logout/${id}`) ? "bg-indigo-200 border-l-8 border-indigo-400" : ""}`}
             >
-              Logout
+              <div className="flex gap-1 text-center">
+                <IoMdExit  className="pt-0.5 h-full w-6" />
+                <div className="text-xl">
+                  Exit
+                </div>
+                </div>
             </Link>
           </li>
         </ul>
-        {/* <div className="flex w-full pt-8">
-          <Button onClick={toggleTheme} className="bg-indigo-500 hover:bg-indigo-400 w-full">
-            {isDarkMode ? "Light" : "Dark"}
-          </Button>
-        </div> */}
+            {/* <div className="flex w-full pt-8">
+              <Button onClick={toggleTheme} className="bg-indigo-500 hover:bg-indigo-400 w-full">
+                {isDarkMode ? "Light" : "Dark"}
+              </Button>
+            </div> */}
       </nav>
     </div>
   );

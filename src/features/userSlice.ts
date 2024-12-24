@@ -19,9 +19,10 @@ const userSlice = createSlice({
     setUserDetails: (state, action: PayloadAction<string>) => {
       state.selectedUser = state.users.find((user) => user.id === action.payload) || null;
     },
-    addUser: (state , action: PayloadAction<string>)=>{
-      state.users.push(action.payload)
-    },
+    
+addUser: (state, action: PayloadAction<User>) => {
+  state.users = [...state.users, action.payload];
+},
     updateUserDetails: (state, action: PayloadAction<User>) => {
       const updatedUser = action.payload;
       const userIndex = state.users.findIndex((user) => user.id === updatedUser.id);

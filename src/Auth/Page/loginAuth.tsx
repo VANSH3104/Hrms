@@ -22,11 +22,11 @@ export const Login: React.FC = () => {
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const User = useSelector((state: RootState)=>state.user.users)
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
-
     // Find the user in the dummy data
-    const user = DUMMY_USERS.find((user) => user.profile.email === email && user.profile.password === password);
+    const user = User.find((user) => user.profile.email === email && user.profile.password === password);
     const userId = user?.id
 
     if (user) {

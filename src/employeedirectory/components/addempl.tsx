@@ -34,6 +34,11 @@ export function DialogAdd() {
     },
     leaveRequests: [],
     attendance: [],
+    attendenceList:{
+      employeeId: nanoid(),
+      present: 0,
+      absent: 0,
+    },
     tasks: [],
     employeeLeave: {
       employeeId: nanoid(),

@@ -7,6 +7,7 @@ import { LeavePage } from "./leave/leavepage";
 import { EmployeeDirectory } from "./employeedirectory/employee";
 import { Attendance } from "./attendence/attendence";
 import { EmployeeSearch } from "./employeedirectory/components/employeeShow";
+import { UserDetail } from "./overview/overview";
 function App() {
   return (
     <>
@@ -61,6 +62,14 @@ function App() {
             element={
               <MainLayout>
                 <EmployeeSearch />
+              </MainLayout>
+            }
+          />
+          <Route
+            path="/userdetails/:id"
+            element={
+              <MainLayout>
+                <UserDetail />
               </MainLayout>
             }
           />

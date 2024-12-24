@@ -1,7 +1,5 @@
-import { useSelector } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 import { RootState } from "@/store/store"
-
-"use client"
 
 import { TrendingUp } from "lucide-react"
 import { Bar, BarChart, CartesianGrid, XAxis } from "recharts"
@@ -22,6 +20,8 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from "../../components/ui/chart"
+import { useEffect } from "react"
+import { updateUserDetails } from "../../features/userSlice"
 
 const chartConfig = {
   desktop: {
@@ -37,6 +37,33 @@ const chartConfig = {
 export function AttendanceChart({ id }: { id: string }) {
   const user = useSelector((state: RootState) => state.user.users).filter((user) => user.id === id)
   const Other = useSelector((state: RootState) => state.user.users).filter((user) => user.id !== id)
+  const dispatch = useDispatch();
+  useEffect(() => {
+      const handleStorageChange = () => {
+        try {
+          const savedUser = localStorage.getItem("user");
+          if (savedUser) {
+            dispatch(updateUserDetails(JSON.parse(savedUser)));
+          }
+        } catch (error) {
+          console.error("Error loading data from localStorage:", error);
+        }
+      };
+      window.addEventListener("storage", handleStorageChange);
+      return () => {
+        window.removeEventListener("storage", handleStorageChange);
+      };
+    }, [dispatch]);
+  useEffect(() => {
+      if (user) {
+        localStorage.setItem("user", JSON.stringify(user));
+      }
+    }, [user]);
+    useEffect(() => {
+      if (Other) {
+        localStorage.setItem("user", JSON.stringify(Other));
+      }
+    }, [Other]);
   const OtherPresent = Other.map((e) => e.attendenceList.present)
     .reduce((total, present) => total + present, 0) / Other.length
   const OtherAbsent = Other.map((e) => e.attendenceList.absent)
@@ -55,7 +82,7 @@ export function AttendanceChart({ id }: { id: string }) {
         <CardDescription>January - June 2024</CardDescription>
       </CardHeader>
       <CardContent className="h-full w-full">
-        <ChartContainer config={chartConfig} className="h-[280px] w-[200px] pl-5">
+        <ChartContainer config={chartConfig} className="h-[280px] w-[100%] flex items-center ">
           <BarChart
             height={200}
             data={chartData}

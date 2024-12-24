@@ -161,7 +161,8 @@ dispatch(updateUserDetails(update));
             <DialogTitle>Notifications</DialogTitle>
             <DialogDescription>Stay updated with the latest notifications.</DialogDescription>
           </DialogHeader>
-          <div className="grid gap-4 py-4">
+          <div className="grid gap-4 py-4 ">
+          <div className="max-h-[300px] overflow-y-auto">
             {notifications?.length > 0 ? (
               notifications.map((notification: Notification) => (
                 <div key={notification.id} className="flex items-center justify-between p-2 border rounded-md shadow-sm">
@@ -189,6 +190,7 @@ dispatch(updateUserDetails(update));
             ) : (
               <div>No notifications yet.</div>
             )}
+            </div>
           </div>
         </DialogContent>
       </Dialog>
